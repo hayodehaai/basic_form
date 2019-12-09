@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Basic Form Page.
+ */
+
+/**
+ * Attach library.
+ */
+function basic_form_page_attachments(array &$page) {
+  $page['#attached']['library'][] = 'basic_form/form_lib';
+}
