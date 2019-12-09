@@ -4,15 +4,22 @@ namespace Drupal\basic_form\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\StringTranslation;
+
 /**
-  * Basic Form class
-  */
-class basicForm extends FormBase {
+ * Basic Form class.
+ */
+class BasicForm extends FormBase {
+
+  /**
+   * Get form id.
+   */
   public function getFormId() {
     return 'basic_form';
   }
 
+  /**
+   * Build form.
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $form['name'] = [
@@ -29,7 +36,7 @@ class basicForm extends FormBase {
         'Male' => $this
           ->t('Male'),
         'Female' => $this
-            ->t('Female'),
+          ->t('Female'),
       ],
       '#required' => TRUE,
     ];
@@ -43,7 +50,7 @@ class basicForm extends FormBase {
     $form['age'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Age'),
-      '#attributes' => array('readonly' => 'readonly', 'value' => 'Enter your birthday!'),
+      '#attributes' => ['readonly' => 'readonly', 'value' => 'Enter your birthday!'],
     ];
 
     $form['submit'] = [
@@ -54,13 +61,21 @@ class basicForm extends FormBase {
     return $form;
   }
 
+  /**
+   * Display the entered data.
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-      $this->messenger()->addMessage($this->t('Your Data:'), 'status', TRUE);
-      $this->messenger()->addMessage($this->t('Name: ') . $form_state->getValue('name'), 'status', TRUE);
-      $this->messenger()->addMessage($this->t('Gender: ') . $form_state->getValue('gender'), 'status', TRUE);
-      $this->messenger()->addMessage($this->t('Birthday: ') . $form_state->getValue('birthday'), 'status', TRUE);
-	  $this->messenger()->addMessage($this->t('Age: ') . $form_state->getValue('age'), 'status', TRUE);
+    $name = $form_state->getValue('name');
+    $gender = $form_state->getValue('gender');
+    $birthday = $form_state->getValue('birthday');
+    $birthday = date("d-m-Y", strtotime($birthday));
+    $age = $form_state->getValue('age');
+    $this->messenger()->addMessage($this->t('Your Data:'), 'status', TRUE);
+    $this->messenger()->addMessage($this->t('Name: @name', ['@name' => $name]), 'status', TRUE);
+    $this->messenger()->addMessage($this->t('Gender: @gender', ['@gender' => $gender]), 'status', TRUE);
+    $this->messenger()->addMessage($this->t('Birthday: @birthday', ['@birthday' => $birthday]), 'status', TRUE);
+    $this->messenger()->addMessage($this->t('Age: @age', ['@age' => $age]), 'status', TRUE);
 
   }
-  }
- ?>
+
+}
