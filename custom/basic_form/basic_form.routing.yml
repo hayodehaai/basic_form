@@ -1,7 +1,0 @@
-basic-form.content:
-  path: 'basic-form'
-  defaults:
-    _form: '\Drupal\basic_form\Form\BasicForm'
-    _title: 'Basic Form'
-  requirements:
-    _access: 'TRUE'

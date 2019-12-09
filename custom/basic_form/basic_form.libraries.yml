@@ -1,7 +1,0 @@
-form_lib:
-  version: 1.0
-  css:
-    layout:
-      css/age.css: {}
-  js:
-    js/age.js: {}

@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<ruleset name="drupal_project">
-  <description>Make this project use the Drupal coding standard.</description>
-  <rule ref="Drupal" />
-</ruleset>
