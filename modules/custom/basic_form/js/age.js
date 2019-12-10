@@ -1,4 +1,6 @@
+if (document.getElementById("edit-birthday" != 0)){
 document.getElementById("edit-birthday").onchange = function() {calculateAge()};
+}
 function calculateAge() {
     var birthday = document.getElementById("edit-birthday").value;
     // parse a date in yyyy-mm-dd format
