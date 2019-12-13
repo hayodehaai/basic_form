@@ -29,15 +29,21 @@ class TurnName extends FilterBase {
    */
   public function process($text, $langcode) {
     // Pattern to search for: [name:anything:anything].
-    $pattern = '/\[name:(?:.*):(?:.*)\]/';
+    $pattern = '/\[name:(?:[^\:]*):(?:[^\:]*)\]/';
     // Scan for token.
-    preg_match($pattern, $text, $match);
-    // Store result in array.
-    $name = explode(":", (str_replace(["[name:", "]"], "", $match[0])));
-    $replace = $this->t("Name: @lastname @firstname", ["@firstname" => $name[0], "@lastname" => $name[1]]);
-    // Replace token.
-    $token_replaced = preg_replace($pattern, $replace, $text);
-    $result = new FilterProcessResult($token_replaced);
+    preg_match_all($pattern, $text, $match);
+    foreach ($match[0] as $value => $names) {
+      // Store result in array.
+      $name = explode(":", (str_replace(["[name:", "]"], "", $names)));
+      $replace = $this->t("Name: @lastname @firstname", ["@firstname" => $name[0], "@lastname" => $name[1]]);
+      // Replace token.
+      $token_replaced = str_replace($names, $replace, $text);
+      /* Replace the next token in the text that's left,
+       * so that not only the first token is continously replaced.
+       */
+      $text = $token_replaced;
+    }
+    $result = new FilterProcessResult($text);
     return $result;
   }
 
